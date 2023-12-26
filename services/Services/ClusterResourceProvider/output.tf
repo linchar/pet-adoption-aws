@@ -1,0 +1,12 @@
+output "servicesawscdkawseks_cluster_resource_provider_on_event_handler_service_role7_f47_b12_a_arn" {
+  value = aws_iam_role.on_event_handler_service_role15_a26729.arn
+}
+
+output "servicesawscdkawseks_cluster_resource_provider_is_complete_handler_service_role620_fc1_cd_arn" {
+  value = aws_iam_role.is_complete_handler_service_role5810_cc58.arn
+}
+
+output "servicesawscdkawseks_cluster_resource_providerframeworkon_event4_f3_ffdef_arn" {
+  value = aws_lambda_function.providerframeworkon_event83_c1_d0_a7.arn
+}
+

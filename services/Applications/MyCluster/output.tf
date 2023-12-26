@@ -1,0 +1,4 @@
+output "applications_applications_my_cluster_b0_b7_c691_kubectl_providerframeworkon_event67190_a37_arn" {
+  value = aws_lambda_function.providerframeworkon_event83_c1_d0_a7.arn
+}
+
