@@ -1,0 +1,4 @@
+terraform/services/.terraform/
+terraform/services/.terraform.lock.hcl
+terraform/services/terraform.tfstate*
+terraform/services/.terraform.tfstate.lock.info
