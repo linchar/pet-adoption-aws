@@ -66,17 +66,17 @@ output "dynamo_db_query_function" {
   value = aws_lambda_function.dynamodbqueryfunction3_c0_e68_e0.arn
 }
 
-output "queue_url" {
-  value = aws_sqs_queue.sqspetadoption2_e8_b1217.id
-}
+# output "queue_url" {
+#   value = aws_sqs_queue.sqspetadoption2_e8_b1217.id
+# }
 
 output "update_adoption_statusurl" {
   value = join("", ["https://", aws_api_gateway_rest_api.statusupdaterservice_pet_adoption_status_updater5_b0_d4_e89.arn, ".execute-api.us-east-1.", data.aws_partition.current.dns_suffix, "/", aws_api_gateway_stage.statusupdaterservice_pet_adoption_status_updater_deployment_stageprod_b658_c1_c4.arn, "/"])
 }
 
-output "sns_topic_arn" {
-  value = aws_sns_topic.topicpetadoption192_cab8_f.id
-}
+# output "sns_topic_arn" {
+#   value = aws_sns_topic.topicpetadoption192_cab8_f.id
+# }
 
 output "rds_server_name" {
   // Unable to resolve Fn::GetAtt with value: [

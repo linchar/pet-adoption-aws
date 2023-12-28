@@ -1,77 +1,77 @@
-resource "aws_sqs_queue" "sqspetadoption2_e8_b1217" {
-  visibility_timeout_seconds = 300
-  tags = {
-    Workshop = "true"
-  }
-}
+# resource "aws_sqs_queue" "sqspetadoption2_e8_b1217" {
+#   visibility_timeout_seconds = 300
+#   tags = {
+#     Workshop = "true"
+#   }
+# }
 
-resource "aws_sns_topic" "topicpetadoption192_cab8_f" {
-  tags = {
-    Workshop = "true"
-  }
-}
+# resource "aws_sns_topic" "topicpetadoption192_cab8_f" {
+#   tags = {
+#     Workshop = "true"
+#   }
+# }
 
-resource "aws_sns_topic_subscription" "topicpetadoptionsomeoneexamplecom87_f65_f2_c" {
-  endpoint = "someone@example.com"
-  protocol = "email"
-  topic_arn = aws_sns_topic.topicpetadoption192_cab8_f.id
-}
+# resource "aws_sns_topic_subscription" "topicpetadoptionsomeoneexamplecom87_f65_f2_c" {
+#   endpoint = "someone@example.com"
+#   protocol = "email"
+#   topic_arn = aws_sns_topic.topicpetadoption192_cab8_f.id
+# }
 
-resource "aws_s3_bucket" "s3bucketpetadoption_cb20_dce5" {
-  tags = {
-    aws-cdk:auto-delete-objects = "true"
-    aws-cdk:cr-owned:d54f913c = "true"
-    Workshop = "true"
-  }
-}
+# resource "aws_s3_bucket" "s3bucketpetadoption_cb20_dce5" {
+#   tags = {
+#     aws-cdk:auto-delete-objects = "true"
+#     aws-cdk:cr-owned:d54f913c = "true"
+#     Workshop = "true"
+#   }
+# }
 
-resource "aws_s3_bucket_policy" "s3bucketpetadoption_policy3_cdfc4_d1" {
-  bucket = aws_s3_bucket.s3bucketpetadoption_cb20_dce5.id
-  policy = jsonencode({
-      Statement = [
-        {
-          Action = [
-            "s3:GetBucket*",
-            "s3:List*",
-            "s3:DeleteObject*"
-          ]
-          Effect = "Allow"
-          Principal = {
-            AWS = aws_iam_role.custom_s3_auto_delete_objects_custom_resource_provider_role3_b1_bd092.arn
-          }
-          Resource = [
-            aws_s3_bucket.s3bucketpetadoption_cb20_dce5.arn,
-            join("", [aws_s3_bucket.s3bucketpetadoption_cb20_dce5.arn, "/*"])
-          ]
-        }
-      ]
-      Version = "2012-10-17"
-    }
-  )
-}
+# resource "aws_s3_bucket_policy" "s3bucketpetadoption_policy3_cdfc4_d1" {
+#   bucket = aws_s3_bucket.s3bucketpetadoption_cb20_dce5.id
+#   policy = jsonencode({
+#       Statement = [
+#         {
+#           Action = [
+#             "s3:GetBucket*",
+#             "s3:List*",
+#             "s3:DeleteObject*"
+#           ]
+#           Effect = "Allow"
+#           Principal = {
+#             AWS = aws_iam_role.custom_s3_auto_delete_objects_custom_resource_provider_role3_b1_bd092.arn
+#           }
+#           Resource = [
+#             aws_s3_bucket.s3bucketpetadoption_cb20_dce5.arn,
+#             join("", [aws_s3_bucket.s3bucketpetadoption_cb20_dce5.arn, "/*"])
+#           ]
+#         }
+#       ]
+#       Version = "2012-10-17"
+#     }
+#   )
+# }
 
-resource "aws_s3_bucket_object" "s3bucketpetadoption_auto_delete_objects_custom_resource_a69_d2963" {
-  // CF Property(ServiceToken) = aws_lambda_function.custom_s3_auto_delete_objects_custom_resource_provider_handler9_d90184_f.arn
-  bucket = aws_s3_bucket.s3bucketpetadoption_cb20_dce5.id
-}
+# resource "aws_s3_bucket_object" "s3bucketpetadoption_auto_delete_objects_custom_resource_a69_d2963" {
+#   // CF Property(ServiceToken) = aws_lambda_function.custom_s3_auto_delete_objects_custom_resource_provider_handler9_d90184_f.arn
+#   bucket = aws_s3_bucket.s3bucketpetadoption_cb20_dce5.id
+# }
 
-resource "aws_iam_role" "custom_s3_auto_delete_objects_custom_resource_provider_role3_b1_bd092" {
-  assume_role_policy = {
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-      }
-    ]
-  }
-  managed_policy_arns = [
-    "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  ]
-}
+# resource "aws_iam_role" "custom_s3_auto_delete_objects_custom_resource_provider_role3_b1_bd092" {
+#   assume_role_policy = {
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole"
+#         Effect = "Allow"
+#         Principal = {
+#           Service = "lambda.amazonaws.com"
+#         }
+#       }
+#     ]
+#   }
+#   managed_policy_arns = [
+#     "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+#   ]
+# }
 
 resource "aws_lambda_function" "custom_s3_auto_delete_objects_custom_resource_provider_handler9_d90184_f" {
   code_signing_config_arn = {
