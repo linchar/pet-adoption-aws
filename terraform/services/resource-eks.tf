@@ -15,7 +15,7 @@ The following does nothing
 
 
 locals {
-  cluster_name = "Petsite"
+  cluster_name = "PetSite"
 }
 
 ################################################################################
@@ -102,22 +102,14 @@ module "eks" {
 
   eks_managed_node_groups = {
     "${local.cluster_name}-wg" = {
-      min_size     = 2
+      min_size     = 1
       max_size     = 4
-      desired_size = 2
+      desired_size = 1
 
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"
       labels = {
         Workshop = "true"
-      }
-
-      taints = {
-        dedicated = {
-          key    = "dedicated"
-          value  = "gpuGroup"
-          effect = "NO_SCHEDULE"
-        }
       }
 
       block_device_mappings = {
@@ -137,9 +129,9 @@ module "eks" {
         max_unavailable_percentage = 33 # or set `max_unavailable`
       }
 
-    #   tags = {
-    #     ExtraTag = "example"
-    #   }
+      # tags = {
+      #   ExtraTag = "example"
+      # }
     }
   }
 
@@ -184,3 +176,24 @@ module "eks" {
 #     ]
 #   })
 # }
+
+# Set up local kubectl credential and context
+variable "profile" {
+  description = "AWS profile"
+  type        = string
+  default     = "default"
+}
+
+resource "time_sleep" "wait_for_kube" {
+  depends_on = [module.eks]
+  # EKS master endpoint may not be immediately accessible, resulting in error, waiting does the trick
+  create_duration = "30s"
+}
+
+resource "null_resource" "local_k8s_context" {
+  depends_on = [time_sleep.wait_for_kube]
+  provisioner "local-exec" {
+    # Update your local eks and kubectl credentials for the newly created cluster
+    command = "export AWS_DEFAULT_PROFILE=${var.profile}; for i in 1 2 3 4 5; do aws eks --region ${local.region}  update-kubeconfig --name ${module.eks.cluster_name} && break || sleep 60; done"    
+  }
+}
